@@ -1,10 +1,10 @@
 import { StatusBar} from 'expo-status-bar';
 import {useState} from 'react';
-import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, View, TouchableOpacity,Dimensions } from 'react-native';
 import Input from './components/Input.js'
 
 export default function App() {
-  const [usuario,setUsuario] = useState({});
+  const [usuario,setUsuario] = useState('');
   const [pass,setPass] = useState('');
 
   const handleInputChange = (value, pass="",opcion="") => {
@@ -17,12 +17,12 @@ export default function App() {
     }
     };
     const submitForm = ()=>{
+      
       // HACER UN ESTADO [USER, SETUSER] Y AGREGARLE EL USUARIO Y PASS.
       // Y DESPUES CONECTARLO CON LA API (DAI-BRODSKY-ROZENBAUM).
     }
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
       <Input textoPlaceholder='Ingrese su usuario' opcion={"Usuario"} onChange={handleInputChange}/>
       <Input textoPlaceholder='Ingrese su contraseña' opcion={"Pass"} onChange={handleInputChange}/>
       <TouchableOpacity 
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    width:'80%',
-    maxWidth:150,
+    width:Dimensions.get("window").width*0.2,
+    height:Dimensions.get("window").height*0.06,
     borderRadius: 10,
     backgroundColor:'black',
   },
