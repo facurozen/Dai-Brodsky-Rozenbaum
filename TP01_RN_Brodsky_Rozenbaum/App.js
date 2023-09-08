@@ -5,15 +5,17 @@ import Login from './src/screens/Login'
 import Registrarse from './src/screens/Registrarse'
 import React from 'react'
 
+const Stack = createNativeStackNavigator(); // Add this line
+
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer fallback>
-      <Stack.Navigator screenOptions={{ headerShown: true }}> 
-        <Stack.Screen name="Registrarse" component={Registrarse} />
-        <Stack.Screen name="Login" component={Login} />
-      </Stack.Navigator>
-    </NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: true }}> 
+          <Stack.Screen name="Registrarse" component={Registrarse} />
+          <Stack.Screen name="Login" component={Login} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   )
 }
