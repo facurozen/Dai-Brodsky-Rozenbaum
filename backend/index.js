@@ -11,39 +11,19 @@ app.use(express.json())
 let pool = await sql.connect(config);
 
 console.log("escuccho");
-const users = [
-    {
-        "id":1,
-        "usuario":"Agustin",
-        "password":"Brodsky"
-    },
-    {
-        "id":2,
-        "usuario":"Facundo",
-        "password":"Rozenbaum"
-    }
-]
+
+
 
 app.post('/login', async (req, res) => {
-    const login = await usuarioServices.authenticate(req.body.usuario, req.body.password)
-    if (login) res.status(200).send({'message': 'authenticated'})
-    else res.status(404).send({'message': 'user not found'})
+    const login = await usuarioServices.loguearse(req.body.Usuario, req.body.Password)
+    if (login > 0) res.status(200).send({'message': 'authenticated'})
+    else res.status(200).send({'message': 'user not found'})
     console.log(login);
 })
 app.post('/register', async (req, res) => {
-    const return_register = await register(req.body, users)
-    if (return_register) {
-        console.log(req.body)
-        const { username, pass } = req.body
-        const request = new sql.Request(pool)
-        request
-        .input('username', sql.NVarChar(50), username)
-        .input('pass', sql.NVarChar(50), pass)
-        .execute('insertUser');
-        res.status(201).send({'message': 'user created'})
-        users = await getUsers()
-    }
-    else res.status(400).send({'message': 'existent user'})
+    console.log(req.body);
+    const register = await usuarioServices.register(req.body)
+    if(register > 0) res.status(200).send({'message' : 'usuario cargado en la base de datos!'});
 })
 
 app.listen(port, () => {

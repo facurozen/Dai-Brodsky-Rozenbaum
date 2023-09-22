@@ -3,46 +3,40 @@ import config from '../dbconfig.js';
 import sql from 'mssql';
 
 class UsuarioServices {
-  static login = async (Usuario) => {
+  static register = async (User) => {
     let rowsAffected = 0;
     console.log('estoy en el insert');
-
-    const { Nombre, Contraseña } = Usuario;
+    console.log(User);
     try {
       let pool = await sql.connect(config);
-      let result = await pool
-        .input('pNombre', Nombre)
-        .input('pContraseña', Contraseña)
-        .query('INSERT INTO Usuario (Nombre, Contraseña) VALUES (@pNombre, @pContraseña)');
-      console.log(result);
-      rowsAffected = result.rowsAffected[0]; // Accede al número de filas afectadas en el índice 0
+      let result = await pool.request()
+        .input('pUsuario',User.Usuario)
+        .input('pPassword',User.Password)
+        .input('pNombre', User.Nombre)
+        .input('pApellido',User.Apellido)
+        .query('INSERT INTO Usuario (Usuario,Password,Nombre,Apellido) VALUES (@pUsuario,@pPassword,@pNombre,@pApellido)');
+      rowsAffected = result.rowsAffected; // Accede al número de filas afectadas en el índice 0
     } catch (error) {
-      console.log(error);
+      console.log(result.rowsAffected);
+      console.log("error");
     }
     return rowsAffected;
   };
 
-  static authenticate = async (username, password) => {
-    let user;
-
-    try {
+  static loguearse = async (usuario, password) => {
+      let rowsAffected = 0;
+      console.log('Estoy en: usuarioServices.Loguearse()');
+      try{
         let pool = await sql.connect(config);
-        let request = new sql.Request(pool); // Crear una instancia de Request
-    
-        request.input('pNombre', sql.NVarChar, username);
-        request.input('pContraseña', sql.NVarChar, password);
-    
-        let result = await request.query('SELECT * FROM Usuario WHERE Nombre = @pNombre AND Contraseña = @pContraseña');
-        
-        if (result.recordset && result.recordset.length > 0) {
-            user = result.recordset[0];
-        } else {
-            console.log('No se encontró ningún usuario');
-        }
-    } catch (error) {
+            let result = await pool.request()
+                .input("pUsuario",usuario)
+                .input("pContraseña",password)
+                .query('SELECT * FROM Usuario WHERE Usuario = @pUsuario AND Password = @pContraseña');
+                rowsAffected = result.rowsAffected;
+      }catch(error){
         console.log(error);
-    }
-    return user;
+      }
+      return rowsAffected;
 };
 
 }
