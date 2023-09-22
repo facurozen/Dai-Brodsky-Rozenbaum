@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput,SafeAreaView } from 'react-native';
 
-const Input = ({textoPlaceholder ="por fin", opcion,onChange}) => {
+const Input = ({ placeholder = "error", value, onChangeText, opcion }) => {
+ 
     const [text,setTexto] = useState('');
 
     const actualizarTexto = (text) => {
         //setTexto(text);
         //onChange(text);
-        if (opcion === "Pass") {
-           // setTexto(text.replace(/./g, '*'));
+        if (opcion) {
+           //setTexto(text.replace(/./g, '*'));
            setTexto(text);
           } else {
             setTexto(text);
@@ -19,15 +20,15 @@ const Input = ({textoPlaceholder ="por fin", opcion,onChange}) => {
     
     
       
-    return(
-    <View style={styles.container}>
-        <TextInput
-            style={styles.input}
-            value={text}
-            placeholder={textoPlaceholder}
-            onChangeText={actualizarTexto}
-         />
-    </View>
+    return (
+        <View style={styles.container}>
+            <TextInput
+                style={styles.input}
+                value={value}
+                placeholder={placeholder}
+                onChangeText={onChangeText}
+            />
+        </View>
     );
 }
 const styles = StyleSheet.create({

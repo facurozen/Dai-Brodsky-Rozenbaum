@@ -7,7 +7,7 @@ import cors from 'cors';
 
 export default function Login() {
   const [usuario,setUsuario] = useState('');
-  const [pass,setPass] = useState('');
+  const [password,setPass] = useState('');
 
   /*const handleInputChange = (value,opcion="") => {
     console.log(value);
@@ -18,34 +18,25 @@ export default function Login() {
       setPass(value);
     }
     };*/
-    const handleInputUser = (value) =>{
-      setUsuario(value);
-    }
-    const handleInputPass = (value) =>{
-      setPass(value);
-    }
     const submitForm = () => {
       const obj = {
-        usuario: usuario,
-        password: pass
+        Usuario: usuario,
+        Password: password
       }
-      console.log(usuario);
-      console.log(pass);
+      console.log(obj);
       axios.post('http://localhost:5000/login', obj ,{
       })
       .then((res) => {
           console.log(res.data.message);
           // Aquí puedes manejar la respuesta del servidor
       })
-      .catch((error) => {
-          console.error("Error:", error);
-          // Aquí puedes manejar los errores
-      });
   };
   return (
     <View style={styles.container}>
-      <Input textoPlaceholder='Ingrese su usuario' opcion={"Usuario"} onChange={handleInputUser}/>
-      <Input textoPlaceholder='Ingrese su contraseña' opcion={"Pass"} onChange={handleInputPass}/>
+
+
+      <Input label='Username' placeholder='Ingrese su usuario' value={usuario} onChangeText={setUsuario} opcion={false}/>
+      <Input label='Password' placeholder='Ingrese su contraseña' value={password} onChangeText={setPass} opcion={true}/>
       <TouchableOpacity 
       style={styles.button}
       onPress={submitForm}

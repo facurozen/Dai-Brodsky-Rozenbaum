@@ -11,7 +11,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer fallback>
-        <Stack.Navigator screenOptions={{ headerShown: true }}> 
+        <Stack.Navigator screenOptions={{ headerShown: false }}> 
           <Stack.Screen name="Registrarse" component={Registrarse} />
           <Stack.Screen name="Login" component={Login} />
         </Stack.Navigator>
