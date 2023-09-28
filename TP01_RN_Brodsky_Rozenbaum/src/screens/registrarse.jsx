@@ -4,31 +4,37 @@ import Input from '../components/Input'
 import React from 'react'
 import axios from 'axios';
 import cors from 'cors';
-
+import { useNavigation } from '@react-navigation/native';
 
 export default function registrarse() {
-  const [username, setUsername] = React.useState('ascsa')
+  const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [name,setName] = React.useState('')
   const [apellido,setApellido] = React.useState('')
   const [message, setMessage] = React.useState('')
+  const navigation = useNavigation();
 
   const signUp = () => {
-    const user = {
+    const [user, setUser] = React.useState({
       Usuario: username,
       Password: password,
       Nombre: name,
       Apellido: apellido
-    };
-  
-    axios
+    });
+   /* axios
       .post('http://localhost:5000/register', user)
       .then((res) => {
         console.log('Usuario registrado exitosamente');
+        // Navega a la pantalla "Perfil" con el nombre de usuario como parámetro
+        
       })
       .catch((error) => {
         console.error('Error en la solicitud:', error);
-      });
+      });*/
+
+      navigation.navigate('Perfil', { user, setUser });
+
+
   };
   
 
