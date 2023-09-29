@@ -12,8 +12,8 @@ export default function Login() {
   let obj;
     const submitForm = () => {
        obj = {
-        Nombre:"null",
-        Apellido:"das",
+        Nombre:"",
+        Apellido:"",
         Usuario: usuario,
         Password: password
       }
@@ -22,9 +22,10 @@ export default function Login() {
       })
       .then((res) => {
           console.log(res.data.message);
-          
+          //(res.data.message != "usuario no registrado!") ? navigation.navigate('Home', { user: obj });
+          navigation.navigate('Home',{ user:obj});
       })
-      navigation.navigate('Home', { user: obj });
+      .catch(console.log("usuario no registrado!"))
   };
   return (
     <View style={styles.container}>

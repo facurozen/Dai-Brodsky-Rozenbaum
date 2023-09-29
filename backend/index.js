@@ -13,7 +13,6 @@ let pool = await sql.connect(config);
 console.log("escuccho");
 
 
-
 app.post('/login', async (req, res) => {
     const login = await usuarioServices.loguearse(req.body.Usuario, req.body.Password)
     if (login > 0) res.status(200).send({'message': 'authenticated'})

@@ -5,6 +5,7 @@ import { StyleSheet, TextInput, View,Dimensions } from 'react-native';
 const Input = ({ placeholder = 'error', value, onChangeText, opcion }) => {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -20,20 +21,17 @@ const Input = ({ placeholder = 'error', value, onChangeText, opcion }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '50%', // Cambiado el ancho al 80% para centrar los TextInput
+    width: '80%', // Ancho del contenedor al 80% de la pantalla
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8, // Añadido el borderRadius
-    marginBottom: 10, // Añadido margen inferior para separar los TextInput
-    marginHorizontal:Dimensions.get('window').height/2,
+    borderRadius: 10, // Bordes redondeados
+    marginBottom: 20, // Margen inferior para separar los TextInput
+    paddingHorizontal: 10, // Padding horizontal para separación del borde
   },
   input: {
     textAlign: 'center',
     borderWidth: 1.5,
-    width: '100%',
+    borderRadius: 8, // Bordes redondeados del TextInput
     height: 40,
   },
 });
-
 export default Input;

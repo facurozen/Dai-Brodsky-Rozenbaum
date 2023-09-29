@@ -18,12 +18,7 @@ export default function registrarse() {
     Apellido: ''
   });
   const signUp = () => {
-    /*axios.post('http://localhost:5000/login', obj ,{
-      })
-      .then((res) => {
-          console.log(res.data.message);
-          
-      })*/
+  
     axios.post('http://localhost:5000/register', user,{
     })
 
@@ -35,7 +30,7 @@ export default function registrarse() {
       });
 
       
-      navigation.navigate('Perfil', { user });
+      navigation.navigate('Home', { user });
 
 
   };
@@ -49,11 +44,12 @@ export default function registrarse() {
       <Input label='Nombre' placeholder='Ingrese su Nombre' value={user.Nombre} onChangeText={(text) => setUser({ ...user, Nombre: text })} opcion={false} />
       <Input label='Apellido' placeholder='Ingrese su Apellido' value={user.Apellido} onChangeText={(text) => setUser({ ...user, Apellido: text })} opcion={false} />
 
-
       <TouchableOpacity style={styles.button} onPress={signUp}>
         <Text style={styles.buttonText}>Registrarse</Text>
       </TouchableOpacity>
-      <Text style={styles.message}>{message}</Text>
+
+      {message ? <Text style={styles.message}>{message}</Text> : null}
+
       <Text style={styles.linkText}>¿Ya tienes una cuenta? <Text style={styles.link} onPress={() => navigation.navigate('Login')}>Iniciar Sesión</Text></Text>
     </View>
   );
@@ -65,6 +61,7 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: "#fff",
     justifyContent: "center",
+    alignItems: 'center',
   },
   text: {
     textAlign: "center",
@@ -73,22 +70,24 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   button: {
-    width: '80%',
+    width: '60%',
     backgroundColor: '#007bff',
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 20,
     paddingVertical: 15,
-    borderRadius: 8,
+    borderRadius: 10,
   },
   buttonText: {
     color: "white",
     fontSize: 18,
+    fontWeight: "bold",
   },
   message: {
     fontSize: 18,
     textAlign: "center",
-    color: "green",
+    color: "red",
+    marginTop: 10,
   },
   linkText: {
     textAlign: "center",

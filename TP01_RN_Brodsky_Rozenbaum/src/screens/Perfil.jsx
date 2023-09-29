@@ -6,22 +6,21 @@ export default function Perfil({ route }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState({ ...user });
   const [showPassword, setShowPassword] = useState(false);
-  const [usuario,setUsuario] = useState({});
-  useEffect(()=>{
-    console.log(user);
-  })
+  const [usuario, setUsuario] = useState(user); 
+
+  useEffect(() => {
+    setUsuario(editedUser);
+  }, [editedUser]);
+
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
   const handleSaveClick = () => {
-    setUser(editedUser);
-    // Aquí puedes agregar lógica para guardar los cambios en el perfil
     setIsEditing(false);
   };
 
   const handleInputChange = (field, value) => {
-    // Actualiza el objeto editedUser cuando se cambia un campo
     setEditedUser({
       ...editedUser,
       [field]: value,
@@ -32,7 +31,6 @@ export default function Perfil({ route }) {
     <View style={styles.container}>
       <Text style={styles.header}>Perfil</Text>
       {isEditing ? (
-        // Modo de edición: muestra un formulario editable
         <View>
           <TextInput
             style={styles.input}
@@ -43,29 +41,28 @@ export default function Perfil({ route }) {
           <TextInput
             style={styles.input}
             placeholder="Apellido"
-            value={editedUser.Apellido}
+            value={usuario.Apellido}
             onChangeText={(text) => handleInputChange('Apellido', text)}
           />
           <TextInput
             style={styles.input}
             placeholder="Usuario"
-            value={editedUser.Usuario}
+            value={usuario.Usuario}
             onChangeText={(text) => handleInputChange('Usuario', text)}
           />
           <TextInput
             style={styles.input}
             placeholder="Contraseña"
-            value={editedUser.Password}
+            value={usuario.Password}
             onChangeText={(text) => handleInputChange('Password', text)}
-            secureTextEntry={!showPassword} // Esto ocultará la contraseña si showPassword es false
+            secureTextEntry={!showPassword} 
           />
-
           <Button title="Guardar" onPress={handleSaveClick} />
         </View>
       ) : (
-        // Modo de visualización: muestra los datos del usuario
+
         <View>
-          <Text>Nombre: {user.Nombre}</Text>
+          <Text>Nombre: {usuario.Nombre}</Text>
           <Text>Apellido: {user.Apellido}</Text>
           <Text>Usuario: {user.Usuario}</Text>
           <Text>Contraseña: {showPassword ? user.Password : '••••••••••'}</Text>
@@ -76,7 +73,6 @@ export default function Perfil({ route }) {
               {showPassword ? 'Ocultar Contraseña' : 'Mostrar Contraseña'}
             </Text>
           </TouchableOpacity>
-
           <Button title="Editar" onPress={handleEditClick} />
         </View>
       )}
