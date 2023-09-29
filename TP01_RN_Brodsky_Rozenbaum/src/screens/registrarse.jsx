@@ -1,10 +1,8 @@
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { Link } from '@react-navigation/native'
-import Input from '../components/Input'
-import React from 'react'
-import axios from 'axios';
-import cors from 'cors';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Input from '../components/Input';
+import axios from 'axios';
 
 export default function registrarse() {
   const [username, setUsername] = React.useState('')
@@ -13,47 +11,52 @@ export default function registrarse() {
   const [apellido,setApellido] = React.useState('')
   const [message, setMessage] = React.useState('')
   const navigation = useNavigation();
-
+  const [user, setUser] = useState({
+    Usuario: '',
+    Password: '',
+    Nombre: '',
+    Apellido: ''
+  });
   const signUp = () => {
-    const [user, setUser] = React.useState({
-      Usuario: username,
-      Password: password,
-      Nombre: name,
-      Apellido: apellido
-    });
-   /* axios
-      .post('http://localhost:5000/register', user)
+    /*axios.post('http://localhost:5000/login', obj ,{
+      })
       .then((res) => {
-        console.log('Usuario registrado exitosamente');
-        // Navega a la pantalla "Perfil" con el nombre de usuario como parámetro
-        
+          console.log(res.data.message);
+          
+      })*/
+    axios.post('http://localhost:5000/register', user,{
+    })
+
+      .then((res) => {
+       console.log('Usuario registrado exitosamente');
       })
       .catch((error) => {
         console.error('Error en la solicitud:', error);
-      });*/
+      });
 
-      navigation.navigate('Perfil', { user, setUser });
+      
+      navigation.navigate('Perfil', { user });
 
 
   };
   
 
   return (
-      <View>
-        <Text style={styles.text}>Register</Text>
-        <Input label='Username' placeholder="Ingrese un Nombre de Usuario" value={username} onChangeText={setUsername} opcion={false} />
-        <Input label='Password' placeholder='Ingrese una Contraseña' value={password} onChangeText={setPassword} opcion={true} />
-        <Input label='Nombre' placeholder='Ingrese su Nombre' value={name} onChangeText={setName} opcion={false} />
-        <Input label='Apellido' placeholder='Ingrese su Apellido' value={apellido} onChangeText={setApellido} opcion={false} />
+    <View style={styles.container}>
+      <Text style={styles.text}>Registrarse</Text>
+      <Input label='Username' placeholder='Ingrese un Nombre de Usuario' value={user.Usuario} onChangeText={(text) => setUser({ ...user, Usuario: text })} opcion={false} />
+      <Input label='Password' placeholder='Ingrese una Contraseña' value={user.Password} onChangeText={(text) => setUser({ ...user, Password: text })} opcion={true} />
+      <Input label='Nombre' placeholder='Ingrese su Nombre' value={user.Nombre} onChangeText={(text) => setUser({ ...user, Nombre: text })} opcion={false} />
+      <Input label='Apellido' placeholder='Ingrese su Apellido' value={user.Apellido} onChangeText={(text) => setUser({ ...user, Apellido: text })} opcion={false} />
 
 
-        <TouchableOpacity style={styles.boton} onPress={signUp}>
-          <Text style={styles.buttonText}>Registrarse</Text>
-        </TouchableOpacity>
-        <Text style={{padding:10}}>Already have an account? <Link style={styles.link} to={{ screen: 'Login'}}>Login</Link></Text>
-        <Text style={styles.message}>{message}</Text>
-      </View>
-  )
+      <TouchableOpacity style={styles.button} onPress={signUp}>
+        <Text style={styles.buttonText}>Registrarse</Text>
+      </TouchableOpacity>
+      <Text style={styles.message}>{message}</Text>
+      <Text style={styles.linkText}>¿Ya tienes una cuenta? <Text style={styles.link} onPress={() => navigation.navigate('Login')}>Iniciar Sesión</Text></Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -61,30 +64,39 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: "#fff",
+    justifyContent: "center",
   },
   text: {
-    padding: 10,
     textAlign: "center",
-    marginBottom: 10,
+    marginBottom: 20,
     fontSize: 24,
     fontWeight: "bold",
   },
-  boton: {
-    backgroundColor: "blue",
-    alignItems: "center",
-    padding: 10,
-    margin: 10,
+  button: {
+    width: '80%',
+    backgroundColor: '#007bff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 20,
+    paddingVertical: 15,
+    borderRadius: 8,
   },
   buttonText: {
     color: "white",
+    fontSize: 18,
   },
   message: {
-    padding: 10,
     fontSize: 18,
-    color: 'black'
+    textAlign: "center",
+    color: "green",
+  },
+  linkText: {
+    textAlign: "center",
+    marginTop: 20,
+    fontSize: 16,
   },
   link: {
-    color: 'blue',
-    textDecorationLine: 'underline'
-  }
-})
+    color: "#007bff",
+    textDecorationLine: "underline",
+  },
+});

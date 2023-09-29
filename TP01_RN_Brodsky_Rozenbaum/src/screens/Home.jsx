@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import { View, Text, Button } from 'react-native';
 
-export default function Home({ route }) {
+export default function Home({ route, navigation }) {
+  const { user } = route.params;
 
-    const { user } = route.params;
-    useEffect(()=>{
-        console.log(user);
-    })
-    return (
-      <View>
-        <Text>Bienvenido {user.Nombre} {user.Apellido}</Text>
-      </View>
-    );
-    }    
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Bienvenido {user.Nombre} {user.Apellido}</Text>
+      <Button
+        title="Perfil"
+        onPress={() => navigation.navigate('Perfil', { user })}
+      />
+    </View>
+  );
+}

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function Perfil({ route }) {
-  const { user,setUser } = route.params;
+  const { user } = route.params;
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState({ ...user });
   const [showPassword, setShowPassword] = useState(false);
-
+  const [usuario,setUsuario] = useState({});
   useEffect(()=>{
     console.log(user);
   })
@@ -17,10 +17,6 @@ export default function Perfil({ route }) {
   const handleSaveClick = () => {
     setUser(editedUser);
     // Aquí puedes agregar lógica para guardar los cambios en el perfil
-    // Por ejemplo, hacer una solicitud a tu API para actualizar el perfil
-    // y luego actualizar el estado o mostrar un mensaje de éxito.
-
-    // Después de guardar, puedes cambiar de nuevo a la visualización
     setIsEditing(false);
   };
 

@@ -1,25 +1,19 @@
-import { StatusBar} from 'expo-status-bar';
-import {useState} from 'react';
-import { Button, StyleSheet, Text, View, TouchableOpacity,Dimensions } from 'react-native';
-import Input from '../components/Input.js'
+import React, { useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { Button, StyleSheet, Text, View, TouchableOpacity, Dimensions, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import cors from 'cors';
 
 export default function Login() {
   const [usuario,setUsuario] = useState('');
   const [password,setPass] = useState('');
-
-  /*const handleInputChange = (value,opcion="") => {
-    console.log(value);
-    if (opcion === "Usuario") {
-      setUsuario(value);  
-    }
-    if(opcion ==="Pass"){
-      setPass(value);
-    }
-    };*/
+  const navigation = useNavigation();
+  const[user,setUser] = useState();
+  let obj;
     const submitForm = () => {
-      const obj = {
+       obj = {
+        Nombre:"null",
+        Apellido:"das",
         Usuario: usuario,
         Password: password
       }
@@ -28,21 +22,28 @@ export default function Login() {
       })
       .then((res) => {
           console.log(res.data.message);
-          // Aquí puedes manejar la respuesta del servidor
+          
       })
+      navigation.navigate('Home', { user: obj });
   };
   return (
     <View style={styles.container}>
-
-
-      <Input label='Username' placeholder='Ingrese su usuario' value={usuario} onChangeText={setUsuario} opcion={false}/>
-      <Input label='Password' placeholder='Ingrese su contraseña' value={password} onChangeText={setPass} opcion={true}/>
-      <TouchableOpacity 
-      style={styles.button}
-      onPress={submitForm}
-      
-      > 
-      <Text style={styles.buttonText}>Ahora si faculindo</Text>
+      <Text style={styles.title}>Bienvenido</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Ingrese su usuario"
+        value={usuario}
+        onChangeText={(text) => setUsuario(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Ingrese su contraseña"
+        secureTextEntry
+        value={password}
+        onChangeText={(text) => setPass(text)}
+      />
+      <TouchableOpacity style={styles.button} onPress={submitForm}>
+        <Text style={styles.buttonText}>Iniciar Sesión</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
@@ -52,19 +53,35 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f0f0f0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  input: {
+    width: '50%',
+    height: 50,
+    borderWidth: 2,
+    borderColor: '#ccc',
+    borderRadius: 10,
+    marginBottom: 20,
+    padding: 10,
+  },
+  button: {
+    width: Dimensions.get('window').width * 0.4,
+    height: 50,
+    borderRadius: 10,
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  button: {
-    width:Dimensions.get("window").width*0.2,
-    height:Dimensions.get("window").height*0.06,
-    borderRadius: 10,
-    backgroundColor:'black',
-  },
   buttonText: {
     color: 'white',
-    fontSize: 20,
-    textAlign: 'center',
+    fontSize: 18,
   },
 });

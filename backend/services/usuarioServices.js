@@ -17,7 +17,6 @@ class UsuarioServices {
         .query('INSERT INTO Usuario (Usuario,Password,Nombre,Apellido) VALUES (@pUsuario,@pPassword,@pNombre,@pApellido)');
       rowsAffected = result.rowsAffected; // Accede al número de filas afectadas en el índice 0
     } catch (error) {
-      console.log(result.rowsAffected);
       console.log("error");
     }
     return rowsAffected;
