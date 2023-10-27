@@ -23,7 +23,7 @@ export default function Login() {
       .then((res) => {
           console.log(res.data.message);
           //(res.data.message != "usuario no registrado!") ? navigation.navigate('Home', { user: obj });
-          navigation.navigate('Home',{ user:obj});
+          if(res.data.message != "user not found"){navigation.navigate('Home',{ user:obj});}
       })
       .catch(console.log("usuario no registrado!"))
   };

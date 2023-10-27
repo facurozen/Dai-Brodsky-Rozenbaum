@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Input from '../components/Input';
 import axios from 'axios';
+import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword, Toast } from "firebase/auth";
 
 export default function registrarse() {
   const [username, setUsername] = React.useState('')
@@ -17,8 +19,12 @@ export default function registrarse() {
     Nombre: '',
     Apellido: ''
   });
-  const signUp = () => {
-  
+
+
+  /*const signUp = () => {
+    const auth = getAuth();
+    
+
     axios.post('http://localhost:5000/register', user,{
     })
 
@@ -30,10 +36,48 @@ export default function registrarse() {
       });
 
       
-      navigation.navigate('Home', { user });
 
 
+  };*/
+  
+const signUp = async () => {
+
+    try {
+      const auth = getAuth();
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const { uid } = user;
+      const db = getFirestore();
+      await setDoc(doc(db, "users", uid), {
+        nombre,
+        telefono,
+        email,
+        uid,
+      });
+      setNombre("");
+      setTelefono("");
+      setEmail("");
+      setPassword("");
+      Toast.show({
+        type: "success",
+        text1: "Registro exitoso",
+        text2: "El usuario ha sido creado correctamente.",
+      });
+    } catch (error) {
+      console.log(error);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Ha ocurrido un error al crear el usuario.",
+      });
+    }
+
+    navigation.navigate('Home', { user });
   };
+  
   
 
   return (

@@ -1,13 +1,33 @@
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 import Login from './src/screens/Login'
 import Registrarse from './src/screens/Registrarse'
 import {useState} from 'react'
 import Home from './src/screens/Home';
 import Perfil from'./src/screens/Perfil';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-const Stack = createNativeStackNavigator(); // Add this line
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyC7KZWX1FL1DoRvGvNWuQf7nMblC3j50O0",
+  authDomain: "dai-brodsky-rozenbaum-jaichi.firebaseapp.com",
+  projectId: "dai-brodsky-rozenbaum-jaichi",
+  storageBucket: "dai-brodsky-rozenbaum-jaichi.appspot.com",
+  messagingSenderId: "183232513838",
+  appId: "1:183232513838:web:36dcb1c4e6d818fcd7dcbf",
+  measurementId: "G-806H98ZRZY"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 export default function App() {
   const [usuario, setUsuario] = useState({});
