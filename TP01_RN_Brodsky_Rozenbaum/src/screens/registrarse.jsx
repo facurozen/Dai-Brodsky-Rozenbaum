@@ -4,43 +4,41 @@ import { useNavigation } from '@react-navigation/native';
 import Input from '../components/Input';
 import axios from 'axios';
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, Toast } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 export default function registrarse() {
-  const [username, setUsername] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [name,setName] = React.useState('')
-  const [apellido,setApellido] = React.useState('')
   const [message, setMessage] = React.useState('')
   const navigation = useNavigation();
   const [user, setUser] = useState({
-    Usuario: '',
+    Email:'',
     Password: '',
-    Nombre: '',
-    Apellido: ''
   });
 
+  const auth = getAuth()
+  
+  const signUp = () => {
+    const obj = {
+      email: user.Email,
+      password: user.Password
+    }
 
-  /*const signUp = () => {
-    const auth = getAuth();
-    
+    let email = user.Email;
+    let pass = user.Password;
+    createUserWithEmailAndPassword(auth,email,pass)
+      .then((userCredential) => {
+        const useri = userCredential.user;
+        setUser(useri)
+        console.log("Usuario creado")
+        navigation.navigate('Home', { user : useri })
 
-    axios.post('http://localhost:5000/register', user,{
-    })
-
-      .then((res) => {
-       console.log('Usuario registrado exitosamente');
       })
       .catch((error) => {
-        console.error('Error en la solicitud:', error);
+        console.error(error)
+        console.log("El registro no pudo completarse")
       });
+  } 
 
-      
-
-
-  };*/
-  
-const signUp = async () => {
+/*const signUp2 = async () => {
 
     try {
       const auth = getAuth();
@@ -76,19 +74,16 @@ const signUp = async () => {
     }
 
     navigation.navigate('Home', { user });
-  };
+  };*/
   
   
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Registrarse</Text>
-      <Input label='Username' placeholder='Ingrese un Nombre de Usuario' value={user.Usuario} onChangeText={(text) => setUser({ ...user, Usuario: text })} opcion={false} />
+      <Input label='Email' placeholder='Ingrese su Email' value={user.Email} onChangeText={(text) => setUser({...user, Email:text })} opcion={false} />
       <Input label='Password' placeholder='Ingrese una Contraseña' value={user.Password} onChangeText={(text) => setUser({ ...user, Password: text })} opcion={true} />
-      <Input label='Nombre' placeholder='Ingrese su Nombre' value={user.Nombre} onChangeText={(text) => setUser({ ...user, Nombre: text })} opcion={false} />
-      <Input label='Apellido' placeholder='Ingrese su Apellido' value={user.Apellido} onChangeText={(text) => setUser({ ...user, Apellido: text })} opcion={false} />
-
-      <TouchableOpacity style={styles.button} onPress={signUp}>
+       <TouchableOpacity style={styles.button} onPress={signUp}>
         <Text style={styles.buttonText}>Registrarse</Text>
       </TouchableOpacity>
 

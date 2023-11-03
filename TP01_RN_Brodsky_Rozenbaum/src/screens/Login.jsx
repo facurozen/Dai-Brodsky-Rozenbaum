@@ -2,39 +2,49 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TouchableOpacity, Dimensions, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import axios from 'axios';
 
 export default function Login() {
   const [usuario,setUsuario] = useState('');
   const [password,setPass] = useState('');
+  const [mail,setMail] = useState('');
   const navigation = useNavigation();
-  const[user,setUser] = useState();
-  let obj;
-    const submitForm = () => {
-       obj = {
-        Nombre:"",
-        Apellido:"",
-        Usuario: usuario,
-        Password: password
-      }
-      console.log(obj);
-      axios.post('http://localhost:5000/login', obj ,{
-      })
-      .then((res) => {
-          console.log(res.data.message);
-          //(res.data.message != "usuario no registrado!") ? navigation.navigate('Home', { user: obj });
-          if(res.data.message != "user not found"){navigation.navigate('Home',{ user:obj});}
-      })
-      .catch(console.log("usuario no registrado!"))
-  };
+  const[user,setUser] = useState({
+    Email:"",
+    Password: ""});
+  
+  const auth = getAuth()
+
+  const login = () => {
+    const obj = {
+      email:mail,
+      password: password
+    }
+
+    signInWithEmailAndPassword(auth, mail, password)
+    .then((userCredential) => {
+      const userLogged = userCredential.user;
+      const updateUserContext = async () => await setUser(userLogged)
+      updateUserContext()
+      console.log('Usuario logueado')
+      navigation.navigate('Home', { user: obj })
+    })
+    .catch((error) => {
+      console.log(error)
+      console.log('user no encontrado');
+    })
+  }
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bienvenido</Text>
       <TextInput
         style={styles.input}
         placeholder="Ingrese su usuario"
-        value={usuario}
-        onChangeText={(text) => setUsuario(text)}
+        value={mail}
+        onChangeText={(text) => setMail(text)}
       />
       <TextInput
         style={styles.input}
@@ -43,7 +53,7 @@ export default function Login() {
         value={password}
         onChangeText={(text) => setPass(text)}
       />
-      <TouchableOpacity style={styles.button} onPress={submitForm}>
+      <TouchableOpacity style={styles.button} onPress={login}>
         <Text style={styles.buttonText}>Iniciar Sesión</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />

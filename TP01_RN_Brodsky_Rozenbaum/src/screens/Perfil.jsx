@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from 'react-native';
 
-export default function Perfil({ route }) {
+export default function Perfil({ route , navigation }) {
+
   const { user } = route.params;
+
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState({ ...user });
   const [showPassword, setShowPassword] = useState(false);
   const [usuario, setUsuario] = useState(user); 
 
   useEffect(() => {
+    console.log(usuario);
     setUsuario(editedUser);
   }, [editedUser]);
 
@@ -34,22 +37,11 @@ export default function Perfil({ route }) {
         <View>
           <TextInput
             style={styles.input}
-            placeholder="Nombre"
-            value={editedUser.Nombre}
-            onChangeText={(text) => handleInputChange('Nombre', text)}
+            placeholder="Email"
+            value={editedUser.Email}
+            onChangeText={(text) => handleInputChange('Email', text)}
           />
-          <TextInput
-            style={styles.input}
-            placeholder="Apellido"
-            value={usuario.Apellido}
-            onChangeText={(text) => handleInputChange('Apellido', text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Usuario"
-            value={usuario.Usuario}
-            onChangeText={(text) => handleInputChange('Usuario', text)}
-          />
+          
           <TextInput
             style={styles.input}
             placeholder="Contraseña"
@@ -62,10 +54,8 @@ export default function Perfil({ route }) {
       ) : (
 
         <View>
-          <Text>Nombre: {usuario.Nombre}</Text>
-          <Text>Apellido: {user.Apellido}</Text>
-          <Text>Usuario: {user.Usuario}</Text>
-          <Text>Contraseña: {showPassword ? user.Password : '••••••••••'}</Text>
+          <Text>Email: {usuario.email}</Text>
+          <Text>Contraseña: {showPassword ? user.password : '••••••••••'}</Text>
           <TouchableOpacity
             style={styles.toggleButton}
             onPress={() => setShowPassword(!showPassword)}>

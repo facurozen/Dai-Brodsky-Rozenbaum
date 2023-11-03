@@ -7,14 +7,13 @@ import Registrarse from './src/screens/Registrarse'
 import {useState} from 'react'
 import Home from './src/screens/Home';
 import Perfil from'./src/screens/Perfil';
-// Import the functions you need from the SDKs you need
+
+
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+const Stack = createStackNavigator();
 const firebaseConfig = {
   apiKey: "AIzaSyC7KZWX1FL1DoRvGvNWuQf7nMblC3j50O0",
   authDomain: "dai-brodsky-rozenbaum-jaichi.firebaseapp.com",

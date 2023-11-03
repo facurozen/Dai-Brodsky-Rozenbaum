@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { getAuth } from 'firebase/auth';
+import { getDocs, query, where, collection } from "firebase/firestore";
+import { useSafeAreaFrame } from 'react-native-safe-area-context';
 
 export default function Home({ route, navigation }) {
   const { user } = route.params;
+
+  useEffect(() => {
+    console.log(user);
+  }, []); 
 
   return (
     <View style={styles.container}>
@@ -10,17 +17,18 @@ export default function Home({ route, navigation }) {
         <Text style={styles.welcomeText}>Bienvenido</Text>
       </View>
       <View style={styles.userInfoContainer}>
-        <Text>Bienvenido {user.Usuario} lo quiero mucho!</Text>
+        <Text>Bienvenido {user.email} lo quiero mucho!</Text>
       </View>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Perfil', { user })}
+        onPress={() => navigation.navigate('Perfil', { user:user })}
       >
         <Text style={styles.buttonText}>Editar Perfil</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
