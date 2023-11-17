@@ -90,6 +90,8 @@ export default function registrarse() {
       {message ? <Text style={styles.message}>{message}</Text> : null}
 
       <Text style={styles.linkText}>¿Ya tienes una cuenta? <Text style={styles.link} onPress={() => navigation.navigate('Login')}>Iniciar Sesión</Text></Text>
+
+      
     </View>
   );
 }

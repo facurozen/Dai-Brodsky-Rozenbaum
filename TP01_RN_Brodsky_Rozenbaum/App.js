@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import Login from './src/screens/Login'
 import Registrarse from './src/screens/Registrarse'
-import {useState} from 'react'
+import { useState,useEffect } from 'react';
 import Home from './src/screens/Home';
 import Perfil from'./src/screens/Perfil';
 
@@ -30,15 +30,16 @@ const analytics = getAnalytics(app);
 
 export default function App() {
   const [usuario, setUsuario] = useState({});
+  
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer fallback>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          
-          <Stack.Screen name="Registrarse" component={Registrarse} />
-          <Stack.Screen name="Perfil" component={Perfil} />
           <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Registrarse" component={Registrarse} />
+
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Perfil" component={Perfil} />
           
         </Stack.Navigator>
       </NavigationContainer>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TouchableOpacity, Dimensions, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -28,7 +28,9 @@ export default function Login() {
       const updateUserContext = async () => await setUser(userLogged)
       updateUserContext()
       console.log('Usuario logueado')
-      navigation.navigate('Home', { user: obj })
+      localStorage.setItem('mail', mail); // guardo en user el mail y la contraseña
+      localStorage.setItem('pass',password);
+      navigation.navigate('Home', { user2: obj })
     })
     .catch((error) => {
       console.log(error)
@@ -36,8 +38,8 @@ export default function Login() {
     })
   }
 
-
   return (
+
     <View style={styles.container}>
       <Text style={styles.title}>Bienvenido</Text>
       <TextInput
@@ -53,9 +55,13 @@ export default function Login() {
         value={password}
         onChangeText={(text) => setPass(text)}
       />
+      
       <TouchableOpacity style={styles.button} onPress={login}>
         <Text style={styles.buttonText}>Iniciar Sesión</Text>
       </TouchableOpacity>
+      <Text style={styles.linkText}>¿No tienes una cuenta? <Text style={styles.link} onPress={() => navigation.navigate('Registrarse')}>Registrate</Text></Text>
+
+
       <StatusBar style="auto" />
     </View>
   );
