@@ -40,12 +40,12 @@
   <ol>
     <li><a href="#sobre-el-proyecto">Sobre el proyecto</a>
       <ul>
-        <li><a href="#construido-con">Construido con</a></li>
+    <li><a href="#construido-con">Construido con</a></li>
       </ul>
     </li>
     <li><a href="#iniciando-el-proyecto">Iniciando el proyecto</a>
       <ul>
-        <li><a href="#instalaciones-y-como-iniciar-la-app">Instalaciones y cómo iniciar la app</a></li>
+    <li><a href="#instalaciones-y-cÓmo-iniciar-la-app">Instalaciones y cómo iniciar la app</a></li>
       </ul>
     </li>
     <li><a href="#contacto">Contacto</a></li>
