@@ -13,7 +13,8 @@ export default function Login() {
   const[user,setUser] = useState({
     Email:"",
     Password: ""});
-  
+    const storedMail = localStorage.getItem('mail');
+    const storedPass = localStorage.getItem('pass');
   const auth = getAuth()
 
   const login = () => {
@@ -21,7 +22,7 @@ export default function Login() {
       email:mail,
       password: password
     }
-
+    
     signInWithEmailAndPassword(auth, mail, password)
     .then((userCredential) => {
       const userLogged = userCredential.user;
@@ -30,16 +31,25 @@ export default function Login() {
       console.log('Usuario logueado')
       localStorage.setItem('mail', mail); // guardo en user el mail y la contraseña
       localStorage.setItem('pass',password);
-      navigation.navigate('Home', { user2: obj })
+      navigation.navigate('Home', { user2: objNew })
     })
     .catch((error) => {
-      console.log(error)
+      console.error(error)
       console.log('user no encontrado');
     })
   }
 
+  useEffect(()=>{
+    if(storedMail){
+      const objNew ={
+        email:storedMail,
+        password:storedPass
+      }
+      navigation.navigate('Home', { user2: objNew })
+    }
+  }),[storedMail]
+ 
   return (
-
     <View style={styles.container}>
       <Text style={styles.title}>Bienvenido</Text>
       <TextInput
@@ -55,7 +65,6 @@ export default function Login() {
         value={password}
         onChangeText={(text) => setPass(text)}
       />
-      
       <TouchableOpacity style={styles.button} onPress={login}>
         <Text style={styles.buttonText}>Iniciar Sesión</Text>
       </TouchableOpacity>
@@ -64,6 +73,7 @@ export default function Login() {
 
       <StatusBar style="auto" />
     </View>
+    
   );
 }
 
