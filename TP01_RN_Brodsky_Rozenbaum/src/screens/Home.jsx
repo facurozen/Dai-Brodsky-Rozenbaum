@@ -1,25 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getDocs, query, where, collection } from "firebase/firestore";
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
+
 //import Carousel from 'react-native-snap-carousel';
 
 
 export default function Home({ route, navigation }) {
-  const { user2 } = route.params;
+  //const { user2 } = route.params;
+  const [modalVisible, setModalVisible] = useState(false);
   const [user, setUser] = useState({
     mail: null,
     password: null,
   });
+  const [cartas, setCartas] = useState([]);
 
   useEffect(() => {
-    const storedMail = localStorage.getItem('mail');
-    const storedPass = localStorage.getItem('pass');
-    console.log(storedMail);
-    console.log(storedPass);
-    setUser({ mail: storedMail, password: storedPass });
+    //const storedMail = localStorage.getItem('mail');
+    //const storedPass = localStorage.getItem('pass');
+    //console.log(storedMail);
+    //console.log(storedPass);
+    setUser({ mail: '0@gmail.com', password: '123456' });
+  }, []);
 
+  /*
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+   */
+
+  useEffect(() => { // acceder a la api!!
+    let accessCode = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
   }, []);
 
   const carouselItems = [
@@ -34,108 +44,118 @@ export default function Home({ route, navigation }) {
     // Agrega más objetos según sea necesario
   ];
 
-  /*const _renderItem = ({ item, index }) => {
-
-    return (
-      <View style={styles.slide}>
-        <Text style={styles.title}>{item.title}</Text>
-      </View>
-    );
-    /*
-    return (
-        <View style={styles.carouselItem}>
-          <Text>{item.title}</Text>
-          <Image style={styles.stretch} source={item.image} />
-          <Image
-          source={require('../../assets/favicon.png')}
-        />
-        </View>
-      );
-  };*/
-  /*<Carousel LINEA 68 REMPLAZANDO LA IMG!
-            layout="default"
-            data={carouselItems}
-            renderItem={_renderItem}
-            sliderWidth={300}
-            itemWidth={300}
-          />*/
-  const verDetalle = (id) => {
-    // Logica para verDetalle
-    console.log(id);
+  const verDetalle = (jeje) => {
+    setModalVisible(jeje);
   }
+  const renderItem = ({ item }) => (
+    <TouchableOpacity style={styles.cardContainer} onPress={() => setModalVisible(true)}>
+      <Image style={styles.cardImage} source={item.image} />
+      <Text style={styles.cardDescription}>{item.title}</Text>
+    </TouchableOpacity>
+  );
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.navbar}>
+      {/* Encabezado de la aplicación */}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Clash Royale Info</Text>
       </View>
-      <View style={styles.bodyContainer}>
-        <TouchableOpacity onPress={() => verDetalle(1)} >
-          <Image style={styles.stretch} source={require('../../assets/favicon.png')} />
-        </TouchableOpacity>
-        <Text style={styles.descripcionCarta}>descripcion de la imagen </Text>
 
+      {/* Cuerpo de la aplicación */}
+      <View style={styles.body}>
+        {/* Sección de carta */}
+
+        <TouchableOpacity style={styles.cardContainer} onPress={() => verDetalle(true)}>
+          <Image style={styles.cardImage} source={require('../../assets/favicon.png')} />
+          <Text style={styles.cardDescription}>Descripción de la carta</Text>
+          <Modal animationType="slide" transparent={true} visible={modalVisible}>
+            <View style={{ alignItems: 'end', margin: '10vw', height: '40vh', borderWidth: '2px', backgroundColor: 'white', borderRadius: '1%' }}>
+              <TouchableOpacity onPress={() => verDetalle(false)}>
+                <Text style={{ margin: '10px', textAlign: 'right', alignSelf: 'flex-start' }}>X</Text>
+              </TouchableOpacity>
+              <Text style={{ margin: '10px',  alignSelf: 'center', fontSize:'20px',fontWeight:'bold' }}>Informacion sobre la carta</Text>
+              
+            </View>
+          </Modal>
+        </TouchableOpacity>
+
+        {/* Sección de arena */}
+        <View style={styles.arenaContainer}>
+          <Text style={styles.arenaText}>Información de la Arena</Text>
+        </View>
       </View>
-      <View style={styles.bodyContainer}><Text>div abajo</Text></View>
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    borderWidth: '2px',
-    height: '100vh',
-    width: '100%',
-    overflow: 'hidden',
-  },
-  bodyContainer: {
     flex: 1,
+    backgroundColor: '#f0f0f0',
+  },
+  header: {
+    backgroundColor: '#3498db',
+    padding: 20,
     alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: 'red',
-    borderWidth: '2px',
-    width: '100%',
   },
-  navbar: {
-    width: '100%',
-    height: '10vh',
-    borderWidth: '2px',
-    borderColor: 'green',
+  headerText: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
   },
-  stretch: {
-    width: 300,
-    height: 300,
-    resizeMode: 'stretch',
+  body: {
+    flex: 1,
+    padding: 20,
   },
-  carouselItem: {
+  cardContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 20,
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  descripcionCarta: {
-    textAlign:'center',
-    width: '100%',
-    height:'30%',
-    borderWidth: '2px',
-    borderColor: 'grey',
-    overflow:'scroll'
+  cardImage: {
+    width: 200,
+    height: 200,
+    resizeMode: 'cover',
+    marginBottom: 10,
+  },
+  cardDescription: {
+    textAlign: 'center',
+    color: '#333',
+    fontSize: 16,
+  },
+  arenaContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+  },
+  arenaText: {
+    color: '#333',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
 
-  /*
+/*
 ------------------------------------------------------------------------ !CODIGO VIEJO! ---------------------------------------------------------------------------------
 <View style={styles.container}>
-  <View style={styles.welcomeContainer}>
-    <Text style={styles.welcomeText}>sambalanga</Text>
-  </View>
-  <View style={styles.userInfoContainer}>
-    <Text>Bienvenido {user2.email} lo quiero mucho!</Text>
-  </View>
-  <TouchableOpacity
-    style={styles.button}
-    onPress={() => navigation.navigate('Perfil', { user:user })}
-  >
-    <Text style={styles.buttonText}>Editar Perfil</Text>
-  </TouchableOpacity>
+<View style={styles.welcomeContainer}>
+  <Text style={styles.welcomeText}>sambalanga</Text>
+</View>
+<View style={styles.userInfoContainer}>
+  <Text>Bienvenido {user2.email} lo quiero mucho!</Text>
+</View>
+<TouchableOpacity
+  style={styles.button}
+  onPress={() => navigation.navigate('Perfil', { user:user })}
+>
+  <Text style={styles.buttonText}>Editar Perfil</Text>
+</TouchableOpacity>
 </View>
 
 const styles = StyleSheet.create({
