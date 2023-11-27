@@ -4,6 +4,7 @@ import { Button, StyleSheet, Text, View, TouchableOpacity, Dimensions, TextInput
 import { useNavigation } from '@react-navigation/native';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import axios from 'axios';
+import Input from '../components/Input';
 
 export default function Login() {
   const [usuario,setUsuario] = useState('');
@@ -52,25 +53,16 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bienvenido</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Ingrese su usuario"
-        value={mail}
-        onChangeText={(text) => setMail(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Ingrese su contraseña"
-        secureTextEntry
-        value={password}
-        onChangeText={(text) => setPass(text)}
-      />
+      <Input label='Email' placeholder='Ingrese su Email' value={mail} onChangeText={(text) => setMail(text)} opcion={false} />
+      <Input label='Password' placeholder="Ingrese su contraseña" value={password} onChangeText={(text) => setPass(text)} opcion={true} />
+
+
       <TouchableOpacity style={styles.button} onPress={login}>
         <Text style={styles.buttonText}>Iniciar Sesión</Text>
       </TouchableOpacity>
       <Text style={styles.linkText}>¿No tienes una cuenta? <Text style={styles.link} onPress={() => navigation.navigate('Registrarse')}>Registrate</Text></Text>
 
-
+      
       <StatusBar style="auto" />
     </View>
     
@@ -80,35 +72,27 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor:'white',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
   },
-  input: {
-    width: '50%',
-    height: 50,
-    borderWidth: 2,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    marginBottom: 20,
-    padding: 10,
-  },
   button: {
-    width: Dimensions.get('window').width * 0.4,
-    height: 50,
-    borderRadius: 10,
-    backgroundColor: 'black',
+    width: '60vw',
+    backgroundColor: '#007bff',
     alignItems: 'center',
     justifyContent: 'center',
+    marginVertical: 20,
+    paddingVertical: 15,
+    borderRadius: 10,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
+    fontWeight: "bold",
   },
 });

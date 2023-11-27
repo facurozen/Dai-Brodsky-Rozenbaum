@@ -3,12 +3,10 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, Modal } from 'react-na
 import { getAuth } from 'firebase/auth';
 import { getDocs, query, where, collection } from "firebase/firestore";
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
-
-//import Carousel from 'react-native-snap-carousel';
+import axios from 'axios';
 
 
 export default function Home({ route, navigation }) {
-  //const { user2 } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
   const [user, setUser] = useState({
     mail: null,
@@ -17,19 +15,33 @@ export default function Home({ route, navigation }) {
   const [cartas, setCartas] = useState([]);
 
   useEffect(() => {
-    //const storedMail = localStorage.getItem('mail');
-    //const storedPass = localStorage.getItem('pass');
-    //console.log(storedMail);
-    //console.log(storedPass);
-    setUser({ mail: '0@gmail.com', password: '123456' });
+    const storedMail = localStorage.getItem('mail');
+    const storedPass = localStorage.getItem('pass');
+    setUser({ mail: storedMail, password: storedPass });
   }, []);
 
   /*
   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-   */
+   
+  
+  */
 
-  useEffect(() => { // acceder a la api!!
-    let accessCode = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+  useEffect(() => {
+    //let accessCode = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+    var token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImJiYjBlYjI3LTdkZTctNGM3MC05OWRmLTY4MzZkZDBhYzY5NyIsImlhdCI6MTcwMTA5Mzk5NSwic3ViIjoiZGV2ZWxvcGVyLzI1NDkxNWM1LWNhNmMtMWVlOC01Yzc2LWE5Yjc4ZDQxNGI4ZiIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxODEuMTY4LjE5Ny40Il0sInR5cGUiOiJjbGllbnQifV19.-ntF0uSyawyzUtfcWkIQorjgyCha3hUi_KreMk_89kVPtHSxtI_NjyNfYLrQMAoEcG6OuTgY_3VxdJWNEgZ-Bg';
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+      'Access-Control-Allow-Origin': '*'
+    };
+    let url = 'https://api.clashroyale.com/v1/cards';
+    axios.get(url, { 'headers': headers })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error('Error en la solicitud: ', error)
+      })
   }, []);
 
   const carouselItems = [
@@ -69,15 +81,15 @@ export default function Home({ route, navigation }) {
         {/* Sección de carta */}
 
         <TouchableOpacity style={styles.cardContainer} onPress={() => verDetalle(true)}>
-          <Image style={styles.cardImage} source={require('../../assets/favicon.png')} />
+          <Image style={styles.cardImage} source={'https://api-assets.clashroyale.com/cards/300/X_DQUye_OaS3QN6VC9CPw05Fit7wvSm3XegXIXKP--0.png'} />
           <Text style={styles.cardDescription}>Descripción de la carta</Text>
           <Modal animationType="slide" transparent={true} visible={modalVisible}>
             <View style={{ alignItems: 'end', margin: '10vw', height: '40vh', borderWidth: '2px', backgroundColor: 'white', borderRadius: '1%' }}>
               <TouchableOpacity onPress={() => verDetalle(false)}>
                 <Text style={{ margin: '10px', textAlign: 'right', alignSelf: 'flex-start' }}>X</Text>
               </TouchableOpacity>
-              <Text style={{ margin: '10px',  alignSelf: 'center', fontSize:'20px',fontWeight:'bold' }}>Informacion sobre la carta</Text>
-              
+              <Text style={{ margin: '10px', alignSelf: 'center', fontSize: '20px', fontWeight: 'bold' }}>Informacion sobre la carta</Text>
+
             </View>
           </Modal>
         </TouchableOpacity>

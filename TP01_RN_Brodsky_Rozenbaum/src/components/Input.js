@@ -21,7 +21,7 @@ const Input = ({ placeholder = 'error', value, onChangeText, opcion }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '80%', // Ancho del contenedor al 80% de la pantalla
+    width: '80vw', // Ancho del contenedor al 80% de la pantalla
     backgroundColor: '#fff',
     borderRadius: 10, // Bordes redondeados
     marginBottom: 20, // Margen inferior para separar los TextInput
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   input: {
     textAlign: 'center',
     borderWidth: 1.5,
-    borderRadius: 8, // Bordes redondeados del TextInput
+    borderRadius: 8,
     height: 40,
   },
 });

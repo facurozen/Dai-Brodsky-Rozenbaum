@@ -35,9 +35,10 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <NavigationContainer fallback>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Home" component={Home} />
 
           <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={Home} />
+
           <Stack.Screen name="Registrarse" component={Registrarse} />
 
           <Stack.Screen name="Perfil" component={Perfil} />
