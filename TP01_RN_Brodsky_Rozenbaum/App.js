@@ -7,10 +7,11 @@ import Registrarse from './src/screens/Registrarse'
 import { useState,useEffect } from 'react';
 import Home from './src/screens/Home';
 import Perfil from'./src/screens/Perfil';
-
+import Comics from'./src/screens/Comics';
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import Personajes from './src/screens/Personajes';
 
 
 const Stack = createStackNavigator();
@@ -35,12 +36,13 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <NavigationContainer fallback>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-
+        {/* https://developer.marvel.com/docs#!/public/getComicIndividual_get_7 Documentación (API)*/}
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Personajes" component={Personajes} />
 
+        <Stack.Screen name="Comics" component={Comics} />
           <Stack.Screen name="Registrarse" component={Registrarse} />
-
           <Stack.Screen name="Perfil" component={Perfil} />
           
         </Stack.Navigator>
