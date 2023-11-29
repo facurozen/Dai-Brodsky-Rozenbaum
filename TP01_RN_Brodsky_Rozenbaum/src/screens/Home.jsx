@@ -38,8 +38,13 @@ export default function Home({ route, navigation }) {
         <Text style={styles.descriptionText}>
           Explora el emocionante universo de Marvel a través de una extensa colección de cómics y descubre a tus personajes favoritos.
         </Text>
+
       </View>
-      {/* Puedes agregar aquí más secciones o características de tu aplicación */}
+      <TouchableOpacity onPress={() => { navigation.navigate('AdivinarPersonaje') }}>
+        <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderWidth: '2px', borderColor: 'white', height: '5vh' }}>
+          <Text style={{ color: 'black' }}> Adivina el personaje!</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }
