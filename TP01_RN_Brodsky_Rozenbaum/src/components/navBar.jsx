@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 //import('./lib/reanimated2/globals');
-const navBar = ({ navigation }) => {
+import { useNavigation } from '@react-navigation/native';
+const navBar = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.header}>
       <Text style={styles.headerText}>Marvel Info</Text>

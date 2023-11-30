@@ -38,11 +38,12 @@ export default function App() {
       <NavigationContainer fallback>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* https://developer.marvel.com/docs#!/public/getComicIndividual_get_7 Documentación (API)*/}
+        <Stack.Screen name="Home" component={Home} />
+
           <Stack.Screen name="AdivinarPersonaje" component={AdivinarPersonaje} />
 
           <Stack.Screen name="Login" component={Login} />
 
-          <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Personajes" component={Personajes} />
 
         <Stack.Screen name="Comics" component={Comics} />
