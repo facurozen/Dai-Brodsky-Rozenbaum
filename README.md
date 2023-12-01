@@ -23,13 +23,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/facurozen/Dai-Brodsky-Rozenbaum-Jaichenco">
-    <img src="https://cdn-icons-png.flaticon.com/512/5087/5087579.png" alt="Logo" width="80" height="80">
+    <img src="https://i.blogs.es/f824b1/new-project-3-1-/1366_2000.jpeg" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Práctica RN - Creando un Login </h3>
+  <h3 align="center"> Marvel Studios - RN </h3>
 
    <p align="center">
-    Trabajo realizado por Agustín Brodsky, Facundo Rozenbaum y Tobías Fernandez Jaichenco
+   La mejor app para demostrar tu conocimiento acerca de Marvel. Realizado por Agustín Brodsky, Facundo Rozenbaum y Facundo Szafersztejn
   </p>
   
 </div>
@@ -55,8 +55,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## Sobre el proyecto
-Este proyecto es un modelo de login y registrarse 
-
+Este proyecto es una app de Marvel, donde podes jugar a adivinar el personaje, y también, ver toda la información sobre cada comic
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -78,7 +77,7 @@ Este proyecto es un modelo de login y registrarse
 * Primero de todo, nos tenemos que asegurar de tener descargado Visual Studio Code. De no ser así, lo descargamos
 * Una vez que abrimos el Visual Studio Code, nos dirigimos a la ventana "Terminal". 
 * Ahí, seleccionamos la opción "Nueva Terminal"
-* Al abrirse la terminal, escribimos: git clone https://github.com/facurozen/Dai-Brodsky-Rozenbaum-Jaichenco.git (tu repositorio)
+* Al abrirse la terminal, escribimos: git clone https://github.com/facurozen/Dai-Brodsky-Rozenbaum-Szafersztejn.git (tu repositorio)
 * Luego de eso, seleccionamos la ventana "Archivo" "Abrir Carpeta", donde buscaremos en nuestro ordenador, la carpeta donde clonamos tu repositorio
 * Una vez abierto el proyecto, utilizando el comando "cd", nos pararemos en la carpeta "backend", de la siguiente manera: cd .\backend\
 * Luego, abrimos otra nueva terminal, y repetimos el mismo proceso, pero para la carpeta "TP01_RN_Brodsky_Rozenbaum". Lo hacemos de la siguiente manera: cd .\TP01_RN_Brodsky_Rozenbaum\
@@ -86,11 +85,8 @@ Este proyecto es un modelo de login y registrarse
 
 ### Instalaciones y cómo iniciar la app
 
-Después de abrir tu proyecto y tener las dos terminales abiertas con las carpetas, instalaremos todo lo necesario para poder iniciar la app.
-* **Para la terminal donde abriste la carpeta "backend":**
-* npm i
-* Cuando termine de descargarse, escribe en la terminal, node index.js
-  
+Después de abrir tu proyecto y tener la terminal abierta con las carpetas, instalaremos todo lo necesario para poder iniciar la app.
+
 * **Para la terminal donde abriste la carpeta "TP01_RN_Brodsky_Rozenbaum":**
 * npm i 
 * npm i expo-cli
@@ -104,7 +100,7 @@ Contáctanos aquí:
 
 Agustin Brodsky - [@agusbrod_](https://instagram.com/agusbrod_) - agusbrodsky2006@gmail.com 
 Facundo Rozenbaum - [@facurozen](https://instagram.com/facurozen) - facurozen@gmail.com
-Tobias Jaichenco - [@tobi_jaichi](https://instagram.com/tobi_jaichi) - totiasfernandez@gmail.com
+Facundo Szafersztejn - [@facu_szafer](https://instagram.com/facu_szafer) - facuszafer@gmail.com
 
-Link del proyecto: https://github.com/facurozen/Dai-Brodsky-Rozenbaum-Jaichenco
+Link del proyecto: https://github.com/facurozen/Dai-Brodsky-Rozenbaum-Szafersztejn
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
