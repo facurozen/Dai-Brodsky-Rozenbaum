@@ -3,6 +3,10 @@
   "packagerPort": 19000,
   "expoServerNgrokUrl": "https://jx-k2w.anonymous.tp01-rn-brodsky-rozenbaum.exp.direct",
   "packagerNgrokUrl": "https://jx-k2w.anonymous.tp01-rn-brodsky-rozenbaum.exp.direct",
+<<<<<<< HEAD
   "ngrokPid": 22448,
+=======
+  "ngrokPid": 8188,
+>>>>>>> 5995c569395134d49508effe63ee7e61860ddfa6
   "webpackServerPort": null
 }
