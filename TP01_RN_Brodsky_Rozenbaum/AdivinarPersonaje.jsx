@@ -1,0 +1,158 @@
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Modal, FlatList, TextInput } from 'react-native';
+import axios from 'axios';
+import NavBar from '../components/navBar.jsx'
+import { useNavigation } from '@react-navigation/native'; // Importa useNavigation
+
+
+export default function AdivinarPersonaje({ route }) {
+    const navigation = useNavigation();
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [user, setUser] = useState({ mail: null, password: null, });
+    const [loading, setLoading] = useState(false);
+    let textoPuntaje = `Puntaje: 
+respusta correcta: +10 
+respuesta incorrecta: -5
+respuesta salteada: -3`;
+
+    useEffect(() => {
+        const storedMail = localStorage.getItem('mail');
+        setUser({ mail: storedMail });
+    }, []);
+
+    // logica del juego!!
+    const [puntaje, setPuntaje] = useState(0);
+    const [random, setRandom] = useState({});
+    const [personajes, setPersonajes] = useState([]);
+    const [imagen, setImagen] = useState([]);
+    const [tiempo, setTiempo] = useState(15);
+    const [ref, setRef] = useState();
+    const [respuesta, setRespuesta] = useState();
+    const [url,setUrl]  = useState('');
+    useEffect(() => {
+        if (tiempo > 0) {
+            setRef(setTimeout(() => {
+                setTiempo(t => t - 1);
+            }, 1000));
+        } else {
+            console.log("no hay mas tiempo zapallo");
+        }
+    }, [tiempo])
+
+    useEffect(() => { // en este useEffect me gustaria cargar todos los personaje para hacer el juego!
+        axios.get('http://gateway.marvel.com/v1/public/characters?ts=1&apikey=0f34133c1783016d6d25e28f6e704f10&hash=013f4ebfd13ba730cf1ba5f735a4bb88')
+            .then((res) => {
+                setPersonajes(res.data.data.results);
+                const randomElement = res.data.data.results[Math.floor(Math.random() * res.data.data.results.length)];
+                setRandom(randomElement);
+                setUrl(`${randomElement.thumbnail.path}.${randomElement.thumbnail.extension}`)
+                console.log(randomElement);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }, []);
+    useEffect(() => { // en este useEffect me gustaria cargar todos los personaje para hacer el juego!
+        setLoading(true);
+    }, [random]);
+    
+    const verificarRespuesta = () => {
+        console.log(`Su respuesta: ${respuesta}`); // valor del input
+        const tiempoRespuesta = tiempo;
+        console.log(tiempoRespuesta); // tiempo que tardo en responder
+        // ACTUALIZAR PUNTAJE
+        if (respuesta == random.name) {
+            setPuntaje(puntaje + 10 + tiempo);
+            console.log("Bien Hecho as acertado tu respuesta!");
+        }
+        else {
+            setPuntaje(puntaje - 2)
+        }
+        console.log(`Respuesta correcta: ${random.name}`);
+        // NUEVO PERSONAJE
+        const randomElement = personajes[Math.floor(Math.random() * personajes.length)];
+
+        setRandom(randomElement);
+        setRespuesta('');
+        clearTimeout(ref);
+        setTiempo(15);
+    }
+
+    return (
+        <View style={styles.container}>
+            <NavBar />
+            <View style={{ display: 'flex', margin: '20px' }}>
+                <Text style={{ color: 'white', fontSize: '25px', textAlign: 'center' }}>Bienvenido {user.mail}</Text>
+                <Text style={{ marginTop: '10px', color: 'white', fontSize: '15px', textAlign: 'center' }}>Cuando usted apriete comenzar. El tiempo arrancara y en 30 segundos para adivinar la mayor cantidad de personajes</Text>
+                <View style={{display:'flex'}}>
+                    <Text style={{ marginTop: '25px', color: 'white', fontSize: '18px', textAlign: 'left' }}>{textoPuntaje}</Text>
+                </View>
+            </View>
+            <View style={styles.formContainer}>
+                {(random.thumbnail) ? (
+                    <Image
+                        source={{ uri: `${random.thumbnail.path}.${random.thumbnail.extension}` }}
+                        style={styles.imagenGame}
+                    />
+                ) : (
+                    <View style={styles.placeholderImage}>
+                        <Text style={styles.placeholderText}>Cargando...</Text>
+                    </View>
+                )}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Adivina el personaje"
+                    name="respuesta"
+                    onChangeText={(text) => setRespuesta(text)}
+                />
+                <TouchableOpacity style={styles.button} onPress={verificarRespuesta}>
+                    <Text style={{ color: 'white' }}>Enviar</Text>
+                </TouchableOpacity>
+                <Text style={styles.infoText}>Puntaje: {puntaje} Tiempo: {tiempo}</Text>
+
+            </View>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'black',
+    },
+    formContainer: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    imagenGame: {
+        width: '90vw',
+        height: '40vh',
+        borderWidth: '2px',
+        borderColor: 'white',
+    },
+    button: {
+        height: '5vh',
+        width: '20vw',
+        borderWidth: '5px',
+        borderColor: 'white',
+        borderRadius: '10%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    input: {
+        margin: '10px',
+        height: '5vh',
+        width: '80vw',
+        borderWidth: '5px',
+        borderColor: 'white',
+        borderRadius: '1%',
+        padding: '10px',
+        color: 'white',
+    },
+    infoText: {
+        color: 'white'
+    }
+});
