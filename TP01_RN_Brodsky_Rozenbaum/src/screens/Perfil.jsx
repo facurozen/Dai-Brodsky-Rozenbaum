@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from 'react-native';
-
-export default function Perfil({ route , navigation }) {
-
+import { useNavigation } from '@react-navigation/native'; 
+    
+export default function Perfil({ route }) {
+const navigation = useNavigation();
   const { user } = route.params;
 
   const [isEditing, setIsEditing] = useState(false);

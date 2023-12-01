@@ -4,13 +4,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import Login from './src/screens/Login'
 import Registrarse from './src/screens/Registrarse'
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Home from './src/screens/Home';
-import Perfil from'./src/screens/Perfil';
-import Comics from'./src/screens/Comics';
+import Perfil from './src/screens/Perfil';
+import Comics from './src/screens/Comics';
 import Personajes from './src/screens/Personajes';
 
-import AdivinarPersonaje from './src/screens/AdivinarPersonaje';
+import AdivinarPersonaje from './src/screens/adivinarPersonaje';
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -32,24 +32,24 @@ const analytics = getAnalytics(app);
 
 export default function App() {
   const [usuario, setUsuario] = useState({});
-  
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer fallback>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* https://developer.marvel.com/docs#!/public/getComicIndividual_get_7 Documentación (API)*/}
-          <Stack.Screen name="AdivinarPersonaje" component={AdivinarPersonaje} />
+          {/* https://developer.marvel.com/docs#!/public/getComicIndividual_get_7 Documentación (API)*/}
+          <Stack.Screen name="Personajes" component={Personajes} />
 
           <Stack.Screen name="Login" component={Login} />
 
           <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Personajes" component={Personajes} />
+          <Stack.Screen name="AdivinarPersonaje" component={AdivinarPersonaje} />
 
-        <Stack.Screen name="Comics" component={Comics} />
+
+          <Stack.Screen name="Comics" component={Comics} />
           <Stack.Screen name="Registrarse" component={Registrarse} />
           <Stack.Screen name="Perfil" component={Perfil} />
 
-          
+
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Modal, FlatList, TextInput } from 'react-native';
 import axios from 'axios';
 import NavBar from '../components/navBar.jsx'
+import { useNavigation } from '@react-navigation/native'; // Importa useNavigation
 
-export default function AdivinarPersonaje({ route, navigation }) {
+
+export default function AdivinarPersonaje({ route }) {
+    const navigation = useNavigation();
+
     const [modalVisible, setModalVisible] = useState(false);
     const [user, setUser] = useState({ mail: null, password: null, });
     let textoPuntaje = `Puntaje: 
@@ -24,7 +28,7 @@ respuesta salteada: -3`;
     const [tiempo, setTiempo] = useState(15);
     const [ref, setRef] = useState();
     const [respuesta, setRespuesta] = useState();
-
+    const [url,setUrl]  = useState('');
     useEffect(() => {
         if (tiempo > 0) {
             setRef(setTimeout(() => {
@@ -41,6 +45,7 @@ respuesta salteada: -3`;
                 setPersonajes(res.data.data.results);
                 const randomElement = res.data.data.results[Math.floor(Math.random() * res.data.data.results.length)];
                 setRandom(randomElement);
+                setUrl(`${randomElement.thumbnail.path}.${randomElement.thumbnail.extension}`)
                 console.log(randomElement);
             })
             .catch((error) => {
@@ -48,28 +53,24 @@ respuesta salteada: -3`;
             });
 
     }, []);
-    useEffect(() => {
-        /*while (random.thumbnail  === null) {
-            (random.thumbnail) ? setImagen(`${random.thumbnail.path}.${random.thumbnail.extension}`) : null;
-            console.log(2)
-        }*/
-    }, [random]);
 
-
-    const verificarRespuesta = (e) => {
-        console.log(respuesta);
+    const verificarRespuesta = () => {
+        console.log(respuesta); // valor del input
         const tiempoRespuesta = tiempo;
-        console.log(tiempoRespuesta);
+        console.log(tiempoRespuesta); // tiempo que tardo en responder
         // ACTUALIZAR PUNTAJE
         if (respuesta.name === random.name) {
             setPuntaje(puntaje + 10 + tiempo);
+            console.log("Bien Hecho as acertado tu respuesta!");
         }
         else {
-            setPuntaje(puntaje - 1)
+            setPuntaje(puntaje - 2)
+
         }
-        console.log(random.name);
-        // NUEVA BANDERA
+        console.log(`Respuesta correcta: ${random.name}`);
+        // NUEVO PERSONAJE
         const randomElement = personajes[Math.floor(Math.random() * 220)];
+
         setRandom(randomElement);
         setRespuesta('');
         clearTimeout(ref);
@@ -82,7 +83,9 @@ respuesta salteada: -3`;
             <View style={{ display: 'flex', margin: '20px' }}>
                 <Text style={{ color: 'white', fontSize: '25px', textAlign: 'center' }}>Bienvenido {user.mail}</Text>
                 <Text style={{ marginTop: '10px', color: 'white', fontSize: '15px', textAlign: 'center' }}>Cuando usted apriete comenzar. El tiempo arrancara y en 30 segundos para adivinar la mayor cantidad de personajes</Text>
-                <Text style={{ marginTop: '25px', color: 'white', fontSize: '18px', textAlign: 'left' }}>{textoPuntaje}</Text>
+                <View style={{display:'flex'}}>
+                    <Text style={{ marginTop: '25px', color: 'white', fontSize: '18px', textAlign: 'left' }}>{textoPuntaje}</Text>
+                </View>
             </View>
             <View style={styles.formContainer}>
                 {(random.thumbnail) ? (
@@ -104,8 +107,9 @@ respuesta salteada: -3`;
                 <TouchableOpacity style={styles.button} onPress={verificarRespuesta}>
                     <Text style={{ color: 'white' }}>Enviar</Text>
                 </TouchableOpacity>
+                <Text style={styles.infoText}>Puntaje: {puntaje} Tiempo: {tiempo}</Text>
+
             </View>
-            <Text style={styles.infoText}>Puntaje: {puntaje} Tiempo: {tiempo}</Text>
         </View>
     );
 }
@@ -144,5 +148,8 @@ const styles = StyleSheet.create({
         borderRadius: '1%',
         padding: '10px',
         color: 'white',
+    },
+    infoText: {
+        color: 'white'
     }
 });

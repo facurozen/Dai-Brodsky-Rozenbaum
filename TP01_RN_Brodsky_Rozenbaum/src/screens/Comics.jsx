@@ -4,8 +4,10 @@ import axios from 'axios';
 import NavBar from '../components/navBar.jsx'
 import { confirmPasswordReset } from 'firebase/auth';
 import Personajes from './Personajes.jsx';
+import { useNavigation } from '@react-navigation/native'; 
 
-export default function Comics({ route, navigation }) {
+export default function Comics({ route }) {
+  const navigation = useNavigation();
   const [selectedComic, setSelectedComic] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [user, setUser] = useState({
@@ -28,6 +30,7 @@ export default function Comics({ route, navigation }) {
 
   const verDetalle = (comic) => {
     setSelectedComic(comic);
+    console.log(comic);
     localStorage.setItem('comicSelected', comic.id);
     setModalVisible(true);
   };
@@ -49,7 +52,7 @@ export default function Comics({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <NavBar navigation={navigation} />
+      <NavBar />
       
       <View style={styles.body}>
         <Text style={{ color: 'white', fontSize: '100%', textAlign: 'center', fontFamily: 'bold' }}>

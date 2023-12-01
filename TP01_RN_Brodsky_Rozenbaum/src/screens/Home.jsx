@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
 import axios from 'axios';
 import NavBar from '../components/navBar.jsx'
+import { useNavigation } from '@react-navigation/native'; 
 
-export default function Home({ route, navigation }) {
+export default function Home({ route }) {
+  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [user, setUser] = useState({
     mail: null,
@@ -30,7 +32,7 @@ export default function Home({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <NavBar navigation={navigation} />
+      <NavBar />
       <View style={styles.introContainer}>
         <Text style={styles.introText}>
           ¡Bienvenido a Marvel Explorer!
